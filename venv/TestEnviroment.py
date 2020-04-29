@@ -14,25 +14,17 @@ collided = []
 
 for i in range(swarm_member_count):
     swarm.append(sClass.Floater())
-    print("Member ", i, "\tx: ", swarm[i].x_coordinate, "\ty: ", swarm[i].y_coordinate)
-
-print(uuid.uuid4())
-print(uuid.uuid4())
-print(uuid.uuid4())
-print(uuid.uuid4())
-print(uuid.uuid4())
-
 
 fig = plt.figure()
 ax = plt.axes(xlim=(0, sClass.squarea), ylim=(0, sClass.squarea))
 lineF, = ax.plot([], [], 'bo')
-lineA, = ax.plot([], [], 'ro')
+lineC, = ax.plot([], [], 'ro')
 
 
 def init():
     lineF.set_data([], [])
-    lineA.set_data([], [])
-    return lineF, lineA
+    lineC.set_data([], [])
+    return lineF, lineC
 
 def animate(*args):
     xF = []
@@ -57,9 +49,9 @@ def animate(*args):
             yA.append(i.y_coordinate)
 
     lineF.set_data(xF, yF)
-    lineA.set_data(xA, yA)
+    lineC.set_data(xA, yA)
 
-    return lineF, lineA
+    return lineF, lineC
 
 ani = animation.FuncAnimation(fig, animate, init_func=init, frames = 100, interval=20, blit=True)
 plt.show()
