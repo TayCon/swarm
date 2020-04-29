@@ -1,20 +1,26 @@
 import sClass
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-
+import uuid
 """
 This is a test enviroment for tinkering around with 'floaters', or the small
 little nodes that make up our swarm network. Better algorithms and more advanced
 Tests ought to be written in other scripts for long-term preservation
 """
 
-swarm_member_count = 100
+swarm_member_count = 50
 swarm = []
 collided = []
 
 for i in range(swarm_member_count):
     swarm.append(sClass.Floater())
     print("Member ", i, "\tx: ", swarm[i].x_coordinate, "\ty: ", swarm[i].y_coordinate)
+
+print(uuid.uuid4())
+print(uuid.uuid4())
+print(uuid.uuid4())
+print(uuid.uuid4())
+print(uuid.uuid4())
 
 
 fig = plt.figure()

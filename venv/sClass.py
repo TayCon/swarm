@@ -1,12 +1,13 @@
 import random
 import numpy
 import math
+import uuid
 
 squarea = 60 #The Square Area of the window
 
 class Floater:
     def __init__(self):
-        self.id = random.randint(1,9999999999999)
+        self.id = uuid.uuid4()
         self.isLeader = False
         self.hasCollided = False
         self.size = 2
