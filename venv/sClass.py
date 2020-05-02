@@ -33,6 +33,10 @@ class Floater:
         self.hasCollided = True
         # Change color to Red at this point
 
+    def setDestination(self, x, y):
+        self.destination.x = x
+        self.destination.y = y
+
     def moveRandomly(self):
         if not self.hasCollided:
             self.position.x = self.position.x + random.randint(-1, 1)
@@ -50,3 +54,52 @@ class Floater:
             if self.position.x > self.destination.x: self.position.x -= 1
             if self.position.y < self.destination.y: self.position.y += 1
             if self.position.y > self.destination.y: self.position.y -= 1
+
+class Swarm:
+    def __init__(self, memberSize):
+        self.collisionTolerance = 7
+        self.member_count = memberSize
+        self.members = []
+
+        for i in range(self.member_count):
+            self.members.append(Floater())
+
+    def withinTolerance(self, num1, num2):
+        if abs(num1 - num2) <= self.collisionTolerance:
+            return True
+        else:
+            return False
+
+    def checkCollisions(self):
+        for i in self.members:
+            for j in self.members:
+                if i.id != j.id:
+                    if  self.withinTolerance(i.position.x, j.position.x) and self.withinTolerance(i.position.y, j.position.y):
+                        i.collide()
+                        j.collide()
+
+    def moveSwarmStochasticly(self):
+        for i in self.members:
+            i.moveRandomly()
+
+    def moveSwarmToDestinations(self):
+        for i in self.members:
+            i.moveToDestination()
+
+    def setCommonDestination(self, x, y):
+        for i in self.members:
+            i.setDestination(x, y)
+
+    def getUncollided(self):
+        uncollided = []
+        for i in self.members:
+            if not i.hasCollided:
+                uncollided.append(i)
+        return uncollided
+
+    def getCollided(self):
+        collided = []
+        for i in self.members:
+            if i.hasCollided:
+                collided.append(i)
+        return collided
