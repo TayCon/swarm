@@ -3,7 +3,7 @@ import numpy
 import math
 import uuid
 
-squarea = 400  # The Square Area of the window
+squarea = 200  # The Square Area of the window
 
 
 class Coordinate:
@@ -23,7 +23,9 @@ class Floater:
         self.hasCollided = False
         self.size = 5
         self.position = Coordinate(random.randint(1, squarea - 1), random.randint(1, squarea - 1))
-        self.destination = Coordinate(squarea/2, squarea/2)
+        self.destination = Coordinate(squarea / 2, squarea / 2)
+        self.detour = Coordinate(None, None)
+        self.trajectory = Coordinate(None, None)
 
     def makeLeader(self):
         self.isLeader = True
@@ -50,14 +52,31 @@ class Floater:
 
     def moveToDestination(self):
         if not self.hasCollided:
-            if self.position.x < self.destination.x: self.position.x += 1
-            if self.position.x > self.destination.x: self.position.x -= 1
-            if self.position.y < self.destination.y: self.position.y += 1
-            if self.position.y > self.destination.y: self.position.y -= 1
+            if self.detour.x == None and self.detour.y == None:
+                target = self.destination
+            else:
+                target = self.detour
+
+            y_dist = target.y - self.position.y
+            x_dist = target.x - self.position.x
+            distToDestination = math.sqrt((y_dist ** 2) + (x_dist ** 2))
+
+            self.trajectory.x = (x_dist / distToDestination)
+            self.trajectory.y = (y_dist / distToDestination)
+
+            self.position.x += self.trajectory_x
+            self.position.y += self.trajectory_y
+
+    def makeDetour(self):
+        trajectory_angle = numpy.arctan(self.trajectory.y/self.trajectory.x)
+        detour_angle = trajectory_angle - (numpy.pi/4) #angle 45 degrees right
+
 
 class Swarm:
     def __init__(self, memberSize):
-        self.collisionTolerance = 7
+        self.collisionTolerance = 3
+        "" \
+        ""
         self.member_count = memberSize
         self.members = []
 
@@ -74,7 +93,8 @@ class Swarm:
         for i in self.members:
             for j in self.members:
                 if i.id != j.id:
-                    if  self.withinTolerance(i.position.x, j.position.x) and self.withinTolerance(i.position.y, j.position.y):
+                    if self.withinTolerance(i.position.x, j.position.x) and self.withinTolerance(i.position.y,
+                                                                                                 j.position.y):
                         i.collide()
                         j.collide()
 
