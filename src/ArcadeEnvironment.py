@@ -1,6 +1,6 @@
 
 import arcade
-import sClass
+from classes import sClass
 
 SCREEN_TITLE = "Swarm Collision Example"
 

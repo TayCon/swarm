@@ -1,4 +1,4 @@
-import sClass
+from classes import sClass
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 

@@ -1,4 +1,4 @@
-import sClass as s
+from classes import sClass as s
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
@@ -8,7 +8,7 @@ little nodes that make up our swarm network. Better algorithms and more advanced
 Tests ought to be written in other scripts for long-term preservation
 """
 
-swarm_member_count = 100
+swarm_member_count = 50
 swarm = s.Swarm(swarm_member_count)
 
 
@@ -35,6 +35,8 @@ def animate(*args):
     for i in swarm.getUncollided():
         xF.append(i.position.x)
         yF.append(i.position.y)
+
+    swarm.checkForDetourNeeds()
 
     swarm.checkCollisions()
 

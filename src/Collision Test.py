@@ -1,4 +1,4 @@
-import sClass as s
+from classes import sClass as s
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
@@ -12,16 +12,12 @@ swarm_member_count = 0
 swarm = s.Swarm(swarm_member_count)
 
 f1 = s.Floater()
-f1.position.x = s.squarea / 3
-f1.position.y = s.squarea / 2
-f1.destination.x = s.squarea * 19 / 20
-f1.destination.y = s.squarea / 2
+f1.position.set(s.squarea / 3, s.squarea / 2)
+f1.destination.set(s.squarea * 19 / 20, s.squarea / 2)
 
 f2 = s.Floater()
-f2.position.x = s.squarea * 2 / 3
-f2.position.y = s.squarea / 2
-f2.destination.x = s.squarea / 20
-f2.destination.y = s.squarea / 2
+f2.position.set(s.squarea * 2 / 3, s.squarea / 2)
+f2.destination.set(s.squarea / 20, s.squarea / 2)
 
 swarm.addMember(f1)
 swarm.addMember(f2)
