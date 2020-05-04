@@ -10,7 +10,7 @@ Tests ought to be written in other scripts for long-term preservation
 
 swarm_member_count = 50
 swarm = s.Swarm(swarm_member_count)
-
+swarm.setRandomDestination()
 
 fig = plt.figure()
 ax = plt.axes(xlim=(0, s.squarea), ylim=(0, s.squarea))
@@ -30,14 +30,13 @@ def animate(*args):
     xA = []
     yA = []
 
-    swarm.moveSwarmToDestinations()
+    swarm.moveSwarmStochasticly()
 
     for i in swarm.getUncollided():
         xF.append(i.position.x)
         yF.append(i.position.y)
 
     swarm.checkForDetourNeeds()
-
     swarm.checkCollisions()
 
     for i in swarm.getCollided():

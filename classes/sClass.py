@@ -15,7 +15,6 @@ class Coordinate:
         self.x = x
         self.y = y
 
-
 class Floater:
     def __init__(self):
         self.id = uuid.uuid4()
@@ -29,23 +28,19 @@ class Floater:
 
     def makeLeader(self):
         self.isLeader = True
-        # Change color to Blue at this point
+        #TODO Change color to Blue at this point
 
     def collide(self):
         self.hasCollided = True
-        # Change color to Red at this point
+        #TODO Change color to Red at this point
 
     def moveRandomly(self):
-        #todo: pick a random destination and move toward it. If at destination, choose new destination
         if not self.hasCollided:
-            self.position.x = self.position.x + random.randint(-1, 1)
-            self.position.y = self.position.y + random.randint(-1, 1)
+            if abs(self.position.x - self.destination.x) < 1 and abs(self.position.y - self.destination.y) < 1:
+                self.destination.set(random.randint(0, squarea), random.randint(0, squarea))
+            else:
+                self.moveToDestination()
 
-            # keeps random movements within bounds
-            if self.position.x > squarea: self.position.x = squarea
-            if self.position.x < 0: self.position.x = 0
-            if self.position.y > squarea: self.position.y = squarea
-            if self.position.y < 0: self.position.y = 0
 
     def moveToDestination(self):
         detour_flag = False
@@ -127,7 +122,11 @@ class Swarm:
 
     def setCommonDestination(self, x, y):
         for i in self.members:
-            i.setDestination(x, y)
+            i.destination.set(x, y)
+
+    def setRandomDestination(self):
+        for i in self.members:
+            i.destination.set(random.randint(0, squarea), random.randint(0, squarea))
 
     def getUncollided(self):
         uncollided = []
