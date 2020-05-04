@@ -28,15 +28,15 @@ def init():
 
 
 def animate(*args):
-    xF = []
-    yF = []
-    xA = []
-    yA = []
+    xf = []
+    yf = []
+    xa = []
+    ya = []
 
     for i in swarm:
         i.move_to_destination()
-        xF.append(i.position.x)
-        yF.append(i.position.y)
+        xf.append(i.position.x)
+        yf.append(i.position.y)
 
     for i in swarm:
         for j in swarm:
@@ -45,12 +45,12 @@ def animate(*args):
                 j.collide()
 
     for i in swarm:
-        if i.hasCollided:
-            xA.append(i.position.x)
-            yA.append(i.position.y)
+        if i.has_collided:
+            xa.append(i.position.x)
+            ya.append(i.position.y)
 
-    lineF.set_data(xF, yF)
-    lineC.set_data(xA, yA)
+    lineF.set_data(xf, yf)
+    lineC.set_data(xa, ya)
 
     return lineF, lineC
 

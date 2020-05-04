@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
 """
-This is a test enviroment for tinkering around with 'floaters', or the small
+This is a test environment for tinkering around with 'floaters', or the small
 little nodes that make up our swarm network. Better algorithms and more advanced
 Tests ought to be written in other scripts for long-term preservation
 """
@@ -35,26 +35,26 @@ def init():
 
 
 def animate(*args):
-    xF = []
-    yF = []
-    xA = []
-    yA = []
+    xf = []
+    yf = []
+    xa = []
+    ya = []
 
     swarm.move_swarm_to_destinations()
 
     for i in swarm.get_uncollided():
-        xF.append(i.position.x)
-        yF.append(i.position.y)
+        xf.append(i.position.x)
+        yf.append(i.position.y)
 
     swarm.check_for_detour_needs()
     swarm.check_collisions()
 
     for i in swarm.get_collided():
-        xA.append(i.position.x)
-        yA.append(i.position.y)
+        xa.append(i.position.x)
+        ya.append(i.position.y)
 
-    lineF.set_data(xF, yF)
-    lineC.set_data(xA, yA)
+    lineF.set_data(xf, yf)
+    lineC.set_data(xa, ya)
 
     return lineF, lineC
 

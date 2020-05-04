@@ -45,7 +45,7 @@ class Floater:
     def move_to_destination(self):
         detour_flag = False
         if not self.has_collided:
-            if self.detour.x == None and self.detour.y == None:
+            if self.detour.x is None and self.detour.y is None:
                 target = self.destination
             else:
                 target = self.detour
@@ -53,13 +53,13 @@ class Floater:
 
             y_dist = target.y - self.position.y
             x_dist = target.x - self.position.x
-            distToDestination = math.sqrt((y_dist ** 2) + (x_dist ** 2))
+            dist_to_destination = math.sqrt((y_dist ** 2) + (x_dist ** 2))
 
-            if distToDestination == 0:
+            if dist_to_destination == 0:
                 return
 
-            self.trajectory.x = (x_dist / distToDestination)
-            self.trajectory.y = (y_dist / distToDestination)
+            self.trajectory.x = (x_dist / dist_to_destination)
+            self.trajectory.y = (y_dist / dist_to_destination)
 
             self.position.x += self.trajectory.x
             self.position.y += self.trajectory.y
@@ -67,7 +67,7 @@ class Floater:
             if detour_flag and abs(self.position.x - target.x) < 1 and abs(self.position.y - target.y) < 1:
                 self.detour.set(None, None)
 
-    def makeDetour(self):
+    def make_detour(self):
         detour_distance = 5
         trajectory_angle = numpy.arctan2(self.trajectory.y, self.trajectory.x)
         detour_angle = trajectory_angle - (numpy.pi / 4)  # angle 45 degrees right
@@ -76,12 +76,12 @@ class Floater:
 
 
 class Swarm:
-    def __init__(self, memberSize):
+    def __init__(self, member_size):
         self.collision_tolerance = 3
         self.detour_radius = 5
         "" \
         ""
-        self.member_count = memberSize
+        self.member_count = member_size
         self.members = []
 
         for i in range(self.member_count):
@@ -103,18 +103,18 @@ class Swarm:
                 if i.id != j.id:
                     if numpy.sqrt((i.position.x - j.position.x) ** 2 + (
                             i.position.y - j.position.y) ** 2) < self.detour_radius:
-                        i.makeDetour()
+                        i.make_detour()
 
     def check_collisions(self):
         for i in self.members:
             for j in self.members:
                 if i.id != j.id:
                     if self.within_tolerance(i.position.x, j.position.x) and self.within_tolerance(i.position.y,
-                                                                                                 j.position.y):
+                                                                                                   j.position.y):
                         i.collide()
                         j.collide()
 
-    def move_swarm_stochasticly(self):
+    def move_swarm_stochastically(self):
         for i in self.members:
             i.move_randomly()
 
