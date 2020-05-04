@@ -19,8 +19,8 @@ f2 = s.Floater()
 f2.position.set(s.squarea * 2 / 3, s.squarea / 2)
 f2.destination.set(s.squarea / 20, s.squarea / 2)
 
-swarm.addMember(f1)
-swarm.addMember(f2)
+swarm.add_member(f1)
+swarm.add_member(f2)
 
 fig = plt.figure()
 ax = plt.axes(xlim=(0, s.squarea), ylim=(0, s.squarea))
@@ -40,16 +40,16 @@ def animate(*args):
     xA = []
     yA = []
 
-    swarm.moveSwarmToDestinations()
+    swarm.move_swarm_to_destinations()
 
-    for i in swarm.getUncollided():
+    for i in swarm.get_uncollided():
         xF.append(i.position.x)
         yF.append(i.position.y)
 
-    swarm.checkForDetourNeeds()
-    swarm.checkCollisions()
+    swarm.check_for_detour_needs()
+    swarm.check_collisions()
 
-    for i in swarm.getCollided():
+    for i in swarm.get_collided():
         xA.append(i.position.x)
         yA.append(i.position.y)
 

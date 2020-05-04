@@ -15,8 +15,8 @@ def on_draw(delta_time):
     arcade.start_render()
 
     for i in swarm:
-        i.moveToDestination()
-        if not i.hasCollided:
+        i.move_to_destination()
+        if not i.has_collided:
             arcade.draw_circle_filled(i.position.x, i.position.y, i.size,arcade.color.BLUE_GREEN)
         else:
             arcade.draw_circle_filled(i.position.x,i.position.y,i.size,arcade.color.RED_DEVIL)

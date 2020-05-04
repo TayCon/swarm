@@ -15,36 +15,36 @@ class Coordinate:
         self.x = x
         self.y = y
 
+
 class Floater:
     def __init__(self):
         self.id = uuid.uuid4()
-        self.isLeader = False
-        self.hasCollided = False
+        self.is_leader = False
+        self.has_collided = False
         self.size = 5
         self.position = Coordinate(random.randint(1, squarea - 1), random.randint(1, squarea - 1))
         self.destination = Coordinate(squarea / 2, squarea / 2)
         self.detour = Coordinate(None, None)
         self.trajectory = Coordinate(None, None)
 
-    def makeLeader(self):
-        self.isLeader = True
-        #TODO Change color to Blue at this point
+    def make_leader(self):
+        self.is_leader = True
+        # TODO Change color to Blue at this point
 
     def collide(self):
-        self.hasCollided = True
-        #TODO Change color to Red at this point
+        self.has_collided = True
+        # TODO Change color to Red at this point
 
-    def moveRandomly(self):
-        if not self.hasCollided:
+    def move_randomly(self):
+        if not self.has_collided:
             if abs(self.position.x - self.destination.x) < 1 and abs(self.position.y - self.destination.y) < 1:
                 self.destination.set(random.randint(0, squarea), random.randint(0, squarea))
             else:
-                self.moveToDestination()
+                self.move_to_destination()
 
-
-    def moveToDestination(self):
+    def move_to_destination(self):
         detour_flag = False
-        if not self.hasCollided:
+        if not self.has_collided:
             if self.detour.x == None and self.detour.y == None:
                 target = self.destination
             else:
@@ -87,57 +87,59 @@ class Swarm:
         for i in range(self.member_count):
             self.members.append(Floater())
 
-    def addMember(self, new_floater):
+    def add_member(self, new_floater):
         self.members.append(new_floater)
         self.member_count += 1
 
-    def withinTolerance(self, num1, num2):
+    def within_tolerance(self, num1, num2):
         if abs(num1 - num2) <= self.collision_tolerance:
             return True
         else:
             return False
 
-    def checkForDetourNeeds(self):
+    def check_for_detour_needs(self):
         for i in self.members:
             for j in self.members:
                 if i.id != j.id:
-                    if numpy.sqrt((i.position.x-j.position.x)**2 + (i.position.y-j.position.y)**2) < self.detour_radius:
+                    if numpy.sqrt((i.position.x - j.position.x) ** 2 + (
+                            i.position.y - j.position.y) ** 2) < self.detour_radius:
                         i.makeDetour()
-    def checkCollisions(self):
+
+    def check_collisions(self):
         for i in self.members:
             for j in self.members:
                 if i.id != j.id:
-                    if self.withinTolerance(i.position.x, j.position.x) and self.withinTolerance(i.position.y,
+                    if self.within_tolerance(i.position.x, j.position.x) and self.within_tolerance(i.position.y,
                                                                                                  j.position.y):
                         i.collide()
                         j.collide()
 
-    def moveSwarmStochasticly(self):
+    def move_swarm_stochasticly(self):
         for i in self.members:
-            i.moveRandomly()
+            i.move_randomly()
 
-    def moveSwarmToDestinations(self):
+    def move_swarm_to_destinations(self):
         for i in self.members:
-            i.moveToDestination()
+            i.move_to_destination()
 
-    def setCommonDestination(self, x, y):
+    def set_common_destination(self, x, y):
         for i in self.members:
             i.destination.set(x, y)
 
-    def setRandomDestination(self):
+    def set_random_destination(self):
         for i in self.members:
             i.destination.set(random.randint(0, squarea), random.randint(0, squarea))
 
-    def getUncollided(self):
+    def get_uncollided(self):
         uncollided = []
         for i in self.members:
-            if not i.hasCollided:
+            if not i.has_collided:
                 uncollided.append(i)
         return uncollided
 
-    def getCollided(self):
+    def get_collided(self):
         collided = []
         for i in self.members:
-            if i.hasCollided:
+            if i.has_collided:
                 collided.append(i)
         return collided

@@ -34,7 +34,7 @@ def animate(*args):
     yA = []
 
     for i in swarm:
-        i.moveToDestination()
+        i.move_to_destination()
         xF.append(i.position.x)
         yF.append(i.position.y)
 
@@ -48,7 +48,6 @@ def animate(*args):
         if i.hasCollided:
             xA.append(i.position.x)
             yA.append(i.position.y)
-
 
     lineF.set_data(xF, yF)
     lineC.set_data(xA, yA)
