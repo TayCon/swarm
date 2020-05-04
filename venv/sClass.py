@@ -61,11 +61,14 @@ class Floater:
             x_dist = target.x - self.position.x
             distToDestination = math.sqrt((y_dist ** 2) + (x_dist ** 2))
 
+            if distToDestination == 0:
+                return
+            
             self.trajectory.x = (x_dist / distToDestination)
             self.trajectory.y = (y_dist / distToDestination)
 
-            self.position.x += self.trajectory_x
-            self.position.y += self.trajectory_y
+            self.position.x += self.trajectory.x
+            self.position.y += self.trajectory.y
 
     def makeDetour(self):
         trajectory_angle = numpy.arctan(self.trajectory.y/self.trajectory.x)
