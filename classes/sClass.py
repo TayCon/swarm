@@ -67,10 +67,13 @@ class Floater:
             if detour_flag and abs(self.position.x - target.x) < 1 and abs(self.position.y - target.y) < 1:
                 self.detour.set(None, None)
 
-    def make_detour(self):
-        detour_distance = 5
+    def make_detour(self, other):
+        detour_distance = 8
         trajectory_angle = numpy.arctan2(self.trajectory.y, self.trajectory.x)
-        detour_angle = trajectory_angle - (numpy.pi / 4)  # angle 45 degrees right
+        diff_x, diff_y = (other.position.x - self.position.x, other.position.y - self.position.y)
+        angle_with_other = numpy.arctan2(diff_y, diff_x)
+        # detour_angle = trajectory_angle - (numpy.pi / 4)  # angle 45 degrees right
+        detour_angle = trajectory_angle - angle_with_other + (numpy.pi / 12)
         self.detour.x = self.position.x + (detour_distance * numpy.cos(detour_angle))
         self.detour.y = self.position.y + (detour_distance * numpy.sin(detour_angle))
 
@@ -78,7 +81,7 @@ class Floater:
 class Swarm:
     def __init__(self, member_size):
         self.collision_tolerance = 3
-        self.detour_radius = 5
+        self.detour_radius = 10
         "" \
         ""
         self.member_count = member_size
@@ -103,7 +106,8 @@ class Swarm:
                 if i.id != j.id:
                     if numpy.sqrt((i.position.x - j.position.x) ** 2 + (
                             i.position.y - j.position.y) ** 2) < self.detour_radius:
-                        i.make_detour()
+                        i.make_detour(j)
+                        j.make_detour(i)
 
     def check_collisions(self):
         for i in self.members:
